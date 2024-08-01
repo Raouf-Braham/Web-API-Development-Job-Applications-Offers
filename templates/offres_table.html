@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WG CONSULTING | Jobs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+</head>
+
+<body>
+
+    <header>
+        <a href="http://127.0.0.1:5000/"><img src="../static/img/wgconsulting_logo.png" alt="wgconsulting_logo"></a>
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <form action="/" method="post" autocomplete="off">
+                <input type="text" name="search" id="search" placeholder="Titre du poste, mots-clés ou entreprise"
+                    autocomplete="off" value="{{search}}">
+                <button type="submit" id="search-btn"><span>Rechercher</span></button>
+            </form>
+        </div>
+        <div class="lang-menu">
+            <div class="selected-lang">
+                <img class="lang-flag" src="../static/img/france.png" alt="language-flag">
+                <h4 class="lang-title">Français</h4>
+            </div>
+            <ul>
+                <li>
+                    <button id="spanish-btn" class="es">Espagnol</button>
+                </li>
+                <li>
+                    <button id="english-btn" class="en" style="transform: translateX(-3%);">Anglais</button>
+                </li>
+                <li>
+                    <button id="francais-btn" class="fr">Français</button>
+                </li>
+                <li>
+                    <button id="arabic-btn" class="ar" style="transform: translateX(-5%);">Arabe</button>
+                </li>
+            </ul>
+
+        </div>
+    </header>
+
+    <section class="filters">
+        <div class="sec-center">
+            <input class="dropdown primary-filters" type="checkbox" id="dropdown-1" name="dropdown-1" />
+            <label class="for-dropdown" for="dropdown-1">Dates <i class='bx bxs-down-arrow'></i></label>
+            <div class="section-dropdown">
+                <a href="#">Dernières 24 heures <i class="uil uil-arrow-right"></i></a>
+                <a href="#">3 derniers jours <i class="uil uil-arrow-right"></i></a>
+                <a href="#">7 derniers jours <i class="uil uil-arrow-right"></i></a>
+                <a href="#">14 derniers jours <i class="uil uil-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="sec-center">
+            <input class="dropdown primary-filters" type="checkbox" id="dropdown-3" name="dropdown-3" />
+            <label class="for-dropdown" for="dropdown-3">Télétravail <i class='bx bxs-down-arrow'></i></label>
+            <div class="section-dropdown">
+                <a href="#">Télétravail <i class="uil uil-arrow-right"></i></a>
+                <a href="#">Télétravail partiel <i class="uil uil-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="sec-center">
+            <input class="dropdown primary-filters" type="checkbox" id="dropdown-4" name="dropdown-4" />
+            <label class="for-dropdown" for="dropdown-4">Lieu<i class='bx bxs-down-arrow'></i></label>
+            <div class="section-dropdown" id="location-dropdown">
+                <!-- Locations will be loaded here by AJAX -->
+            </div>
+        </div>
+
+        <div class="sec-center">
+            <input class="dropdown primary-filters" type="checkbox" id="dropdown-5" name="dropdown-5" />
+            <label class="for-dropdown" for="dropdown-5">Salaire <i class='bx bxs-down-arrow'></i></label>
+            <div class="section-dropdown">
+                <a href="#">1 666,67 € et +/mois <i class="uil uil-arrow-right"></i></a>
+                <a href="#">2 083,33 € et +/mois <i class="uil uil-arrow-right"></i></a>
+                <a href="#">2 500,00 € et +/mois <i class="uil uil-arrow-right"></i></a>
+                <a href="#">2 916,67 € et +/mois <i class="uil uil-arrow-right"></i></a>
+                <a href="#">3 333,33 € et +/mois <i class="uil uil-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="sec-center">
+            <input class="dropdown primary-filters" type="checkbox" id="dropdown-6" name="dropdown-6" />
+            <label class="for-dropdown" for="dropdown-6">Type de contrat <i class='bx bxs-down-arrow'></i></label>
+            <div class="section-dropdown">
+                <a href="#" data-filter="employment_type" data-value="Temps plein">Temps plein <i class="uil uil-arrow-right"></i></a>
+                <a href="#" data-filter="employment_type" data-value="CDI">CDI <i class="uil uil-arrow-right"></i></a>
+                <a href="#" data-filter="employment_type" data-value="CDD">CDD <i class="uil uil-arrow-right"></i></a>
+                <a href="#" data-filter="employment_type" data-value="Temps partiel">Temps partiel<i class="uil uil-arrow-right"></i></a>
+                <a href="#" data-filter="employment_type" data-value="Intérim">Intérim <i class="uil uil-arrow-right"></i></a>
+                <a href="#" data-filter="employment_type" data-value="Apprentissage">Apprentissage <i class="uil uil-arrow-right"></i></a>
+                <a href="#" data-filter="employment_type" data-value="Contrat pro">Contrat pro <i class="uil uil-arrow-right"></i></a>
+                <a href="#" data-filter="employment_type" data-value="Freelance">Freelance / Indépendant <i class="uil uil-arrow-right"></i></a>
+                <a href="#" data-filter="employment_type" data-value="Stage">Stage <i class="uil uil-arrow-right"></i></a>
+            </div>
+
+                        <!-- Hidden form for sending data to Flask -->
+            <form id="filterForm" action="/" method="post" style="display: none;">
+                <input type="hidden" name="filter_name" id="filter_name">
+                <input type="hidden" name="filter_value" id="filter_value">
+            </form>
+        </div>
+
+        <div class="sec-center">
+            <input class="dropdown primary-filters" id="other-filters-options" type="checkbox" id="dropdown-7"
+                name="dropdown-7" />
+            <label class="for-dropdown" for="other-filters-options" id="dropdown-label">Secteurs<i
+                    class='bx bxs-down-arrow'></i></label>
+            <div class="modal-backdrop" id="modalBackdrop"></div>
+
+            <div id="other-filters-popup" class="filters-popup">
+                <h3>Secteurs</h3>
+                <hr class="styled-hr">
+                <button id="close-filter"><i class="fa-solid fa-xmark"></i></button>
+                <div class="filter-form">
+                    <form id="filtersForm">
+                        <div class="filter-pair">
+                            <div class="filter-left">
+                                <label><input type="checkbox" name="full-time"></label>
+                            </div>
+                            <div class="filter-right">
+                                <label><input type="checkbox" name="part-time"></label>
+                            </div>
+                        </div>
+                        <div class="filter-pair">
+                            <div class="filter-left">
+                                <label><input type="checkbox" name="8-hour"></label>
+                            </div>
+                            <div class="filter-right">
+                                <label><input type="checkbox" name="weekend-available"> </label>
+                            </div>
+                        </div>
+                        <div class="filter-pair">
+                            <div class="filter-left">
+                                <label><input type="checkbox" name="remote"> </label>
+                            </div>
+                            <div class="filter-right">
+                                <label><input type="checkbox" name="in-office"> </label>
+                            </div>
+                        </div>
+                        <div class="filter-pair">
+                            <div class="filter-left">
+                                <label><input type="checkbox" name="morning"> </label>
+                            </div>
+                            <div class="filter-right">
+                                <label><input type="checkbox" name="evening"> </label>
+                            </div>
+                        </div>
+                        <div class="filter-pair">
+                            <div class="filter-left">
+                                <label><input type="checkbox" name="morning"> </label>
+                            </div>
+                            <div class="filter-right">
+                                <label><input type="checkbox" name="evening"> </label>
+                            </div>
+                        </div>
+                        <div class="filter-pair">
+                            <div class="filter-left">
+                                <label><input type="checkbox" name="morning"> </label>
+                            </div>
+                            <div class="filter-right">
+                                <label><input type="checkbox" name="evening"> </label>
+                            </div>
+                        </div>
+                        <div class="filter-pair">
+                            <div class="filter-left">
+                                <label><input type="checkbox" name="morning"> </label>
+                            </div>
+                            <div class="filter-right">
+                                <label><input type="checkbox" name="evening"> </label>
+                            </div>
+                        </div>
+                        <div class="filter-pair">
+                            <div class="filter-left">
+                                <label><input type="checkbox" name="morning"> </label>
+                            </div>
+                            <div class="filter-right">
+                                <label><input type="checkbox" name="evening"> </label>
+                            </div>
+                        </div>
+                        <div class="filter-pair">
+                            <div class="filter-left">
+                                <label><input type="checkbox" name="morning"> </label>
+                            </div>
+                            <div class="filter-right">
+                                <label><input type="checkbox" name="evening"> </label>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="filter-controls">
+                        <button id="applyFiltersBtn">Appliquer</button>
+                        <button id="clearFiltersBtn">Effacer tout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="styled-hr">
+
+    <section class="jobs-number">
+        <p>Offres d'emploi pour : <span id="current-job">{{ search_query_display }} ({{ total_jobs }})</span> </p>
+        <div class="sort">
+            <h5>Trier par : <button id="sort-by-newest" class="active-button-filter">Pertinance</button> - <button
+                    id="sort-by-date">date</button></h5>
+            <p>Plus de <span id="jobs-list-length">{{ total_jobs }}</span> emplois
+                <i class="fa-solid fa-circle-question"></i>
+            </p>
+        </div>
+    </section>
+
+            
+    {% if no_results %}
+    <div class="empty-query">
+        <h1>Aucun résultat trouvé pour {{ search_query_display }} !</h1>
+    </div>
+
+    
+    <style>
+            
+        .job-list, .job-detail, .popup-form, .pagination-container, .jobs-number{
+            display: none;
+        }
+
+        .empty-query{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+    {% else %}
+
+    <main>
+        <section class="job-list">
+            {% for hit in response.hits.hits %}
+
+            <article class="job-item">
+                <h2 class="job-title" data-translate>{{ hit._source.job_title }}</h2>
+                <p class="job-entreprise"><i class='bx bx-buildings'></i>{{ hit._source.company }}</p>
+                <p class="job-place"><i class="fa-solid fa-location-dot"></i>{{ hit._source.location }}</p>
+                <p class="job-summary" data-translate>○ {{ hit._source.job_description | safe }}</p>
+                <p class="job-date"  data-publication-date="{{ hit._source.date_publication }}" data-translate><i class="fa-solid fa-clock"></i>
+                    Offre publiée il y a <span class="days-since-publication"> </span> jours
+                    <i id="circle-icon" class="fa-solid fa-circle"></i>
+                    <button class="see-more-btn" data-job-id="{{ hit._source.id }}" data-translate>Afficher les
+                        détails</button>
+                <form id="job-details-form" method="POST" style="visibility: hidden;">
+                    <!-- Other job details -->
+                    <input type="hidden" id="job_id" name="job_id" value="{{ hit._source.id }}">
+                </form>
+
+                </p>
+            </article>
+
+            {% endfor %}
+
+        </section>
+
+        <section class="job-detail">
+            {% for hit in response.hits.hits %}
+
+
+            <div class="job-detail-header">
+                <h2 class="job-detail-title" data-translate>{{ hit._source.job_title }}</h2>
+                <div class="job-detail-header-entreprise">
+                    <a href="#" class="job-detail-header-company-name">{{ hit._source.company }}<i
+                            class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    <i class="fa-solid fa-circle"></i><span>3.2</span><i class='bx bxs-star' style='color:#007bff'></i>
+                </div>
+                <div class="job-detail-header-company-location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h4>{{ hit._source.location }}</h4>
+                </div>
+                <h4 id="job-type"><i class="fa-solid fa-briefcase"></i>{{ hit._source.employment_type }}</h4>
+                <p data-translate>Vous pouvez postuler ici en cliquant sur "Vers Postuler" ou ajouter cette offre à vos
+                    favoris.</p>
+                <div class="postuler">
+                    <button class="animated-button" id="six" data-job-title="{{ hit._source.job_title }}">
+                        <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+                            </path>
+                        </svg>
+                        <span class="text" data-translate>Vers Postuler</span>
+                        <span class="circle"></span>
+                        <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+                            </path>
+                        </svg>
+                    </button>
+                    <i class="fa-regular fa-bookmark" id="bookmark-icon"></i>
+                </div>
+                <br>
+            </div>
+
+            <hr class="styled-hr">
+
+            <div class="job-more-details">
+                <h3 data-translate>Détails de l'emploi</h3>
+                <p data-translate>Correspondance entre ce poste et votre <a href="">profil <i
+                            class="fa-solid fa-arrow-up-right-from-square"></i> .</a></p>
+                <div class="job-types">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <h4 data-translate>Type de poste</h4>
+                </div>
+                <h5 id="contract-type">{{ hit._source.employment_type }}</h5>
+                <hr class="styled-hr">
+                <div class="job-more-details-location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h4 data-translate>Lieu</h4>
+                    <h5 id="location">{{ hit._source.location }}</h5>
+                </div>
+                <hr class="styled-hr">
+                <div class="job-more-details-advantages" data-translate>
+                    <div class="advantages-title">
+                        <i class="fa-solid fa-list-ul"></i>
+                        <h4>Avantages</h4>
+                    </div>
+                    <p><em>Extraits de la description complète du poste</em><br>
+                        <span>• {{ hit._source.job_description | safe }}</span>
+                    </p>
+                </div>
+                <hr class="styled-hr">
+
+                <div class="job-more-details-description" data-translate>
+                    <h3>Description du poste</h3>
+                    <p>{{ hit._source.job_description }}</p>
+                </div>
+                <div class="job-more-details-about">
+                    <h3 data-translate>À propos du poste</h3>
+                    <p data-translate>Au sein de notre équipe de ventes multiculturelle,
+                        nous avons une nouvelle opportunité pour un stage en support des équipes d'account management
+                        pour une durée de 6 mois avec un débutt de contrat en juillet et septembre.
+                    </p>
+                </div>
+                <div class="job-more-details-responsibilities" data-translate>
+                    <h3>Principales responsabilités</h3>
+                    <p>Développement et suivi de l’activité commerciale <br>
+                        • Organiser et préparer des réunions client avec la direction des ventes.<br>
+                        • Suivre les actions client identifiées lors des revues d’activité.<br>
+                        • Développer des opportunités par l’identification de contacts en coopération avec les
+                        responsables de compte et l'équipe marketing.<br>
+                        • Répondre aux questions client en coordination avec les équipes de ventes, marketing et les
+                        opérations.<br>
+                        • Maintenir l’outil CRM avec les informations relatives à l’activité commerciale.
+                    </p>
+                </div>
+                <div class="job-more-details-about-you" data-translate>
+                    <h3>À propos de toi</h3>
+                    <p>Développement et suivi de l’activité commerciale <br>
+                        • Organiser et préparer des réunions client avec la direction des ventes.<br>
+                        • Suivre les actions client identifiées lors des revues d’activité.<br>
+                        • Développer des opportunités par l’identification de contacts en coopération avec les
+                        responsables de compte et l'équipe marketing.<br>
+                        • Répondre aux questions client en coordination avec les équipes de ventes, marketing et les
+                        opérations.<br>
+                        • Maintenir l’outil CRM avec les informations relatives à l’activité commerciale.
+                    </p>
+                </div>
+                <div class="job-more-details-benefits" data-translate>
+                    <h3>Benefices</h3>
+                    <p>Un environnement de travail dynamique, stimulant et international ou vos qualités seront mises en
+                        avant;<br>
+                        Une équipe international sympathique dans laquelle vous pourrez être accompagné et gérer des
+                        projets de manière autonome;<br>
+                        Remboursement des transports en commun à hauteur de 50%;<br>
+
+                        Chez International SOS, nous offrons un excellent environnement de travail, grâce à notre
+                        engagement envers le travail flexible, la diversité et le développement. <br>
+                        Nous encourageons chaque personne à faire de son mieux en créant un environnement d'inclusion,
+                        d'égalité et de soutien. <br>
+                    </p>
+                </div>
+                <hr class="styled-hr">
+                <div class="report" data-translate>
+                    <p><em>Y a-t-il un problème ? Veuillez signaler l'offre.</em></p>
+                    <button><i class="fa-solid fa-flag"></i> Signaler l'offre</button>
+                </div>
+
+            </div>
+
+            {% endfor %}
+        </section>
+
+
+
+        <section id="popup-form" class="popup-form">
+            <div class="toast active">
+  
+                <div class="toast-content">
+                    <i id="alert-icon" class="fa-solid fa-circle-exclamation"></i>
+              
+                  <div class="message">
+                    <span class="text text-1">Success</span>
+                    <span class="text text-2">Your changes has been saved</span>
+                  </div>
+                </div>
+                <i class="fa-solid fa-xmark close"></i>
+              
+                <!-- Remove 'active' class, this is just to show in Codepen thumbnail -->
+                <div class="progress active"></div>
+            </div>
+
+            <div class="notification-box"></div>
+            <div class="formbold-main-wrapper zoom-container">
+                <button id="close-application"><i class="fa-solid fa-circle-xmark"></i></button>
+                <div class="formbold-form-wrapper">
+                    <img src="../static/img/job.jpg" width="250px" height="auto" class="formbold-img">
+                    <form action="/job-application" method="POST" autocomplete="off" enctype="multipart/form-data">
+                        <div class="formbold-input-flex">
+                            <div>
+                                <label for="firstname" class="formbold-form-label"> Nom </label>
+                                <input type="text" name="firstname" id="firstname" placeholder="Votre nom"
+                                    class="formbold-form-input" autocomplete="off" required/>
+                            </div>
+
+                            <div>
+                                <label for="lastname" class="formbold-form-label"> prénom </label>
+                                <input type="text" name="lastname" id="lastname" placeholder="Votre prénom"
+                                    class="formbold-form-input" autocomplete="off" required/>
+                            </div>
+                        </div>
+
+                        <div class="formbold-input-flex">
+                            <div>
+                                <label for="email" class="formbold-form-label"> Email </label>
+                                <input type="email" name="email" id="email" placeholder="exemple@email.com"
+                                    class="formbold-form-input" autocomplete="off" required/>
+                            </div>
+
+                            <div>
+                                <label class="formbold-form-label">Genre</label>
+
+                                <select class="formbold-form-input" name="occupation" id="occupation" required>
+                                    <option value="Homme">Homme</option>
+                                    <option value="Femme">Femme</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="formbold-mb-3 formbold-input-wrapp">
+                            <label for="phone" class="formbold-form-label"> Téléphone </label>
+
+                            <div>
+                                <input type="tel" name="phone" id="phone" placeholder="Votre numéro de téléphone"
+                                    class="formbold-form-input" autocomplete="off" required/>
+                            </div>
+                        </div>
+
+                        <div class="formbold-mb-3">
+                            <label for="job-name-application" class="formbold-form-label"> Postuler pour le poste : </label>
+                            <input type="text" name="job-name-application" id="job-name-application" class="formbold-form-input" required autocomplete="off"/>
+                        </div>
+
+                        <div class="formbold-mb-3">
+                            <label for="dob" class="formbold-form-label"> Quand pouvez-vous commencer ? </label>
+                            <input type="date" name="dob" id="dob" class="formbold-form-input" required/>
+                        </div>
+
+                        <div class="formbold-mb-3">
+                            <label for="address" class="formbold-form-label"> Addresse </label>
+
+                            <input type="text" name="address" id="address" placeholder="Votre addresse"
+                                class="formbold-form-input formbold-mb-3" autocomplete="off" required/>
+                        </div>
+
+                        <div class="formbold-mb-3">
+                            <label for="message" class="formbold-form-label">
+                                Lettre de motivation
+                            </label>
+                            <textarea rows="6" name="message" id="message" class="formbold-form-input"
+                                autocomplete="off" required></textarea>
+                        </div>
+
+                        <div class="formbold-form-file-flex">
+                            <label for="upload" class="formbold-form-label">
+                                Télécharger le CV (Limite de 3 MO)
+                            </label>
+                            <input type="file" name="upload" id="upload" class="formbold-form-file" accept=".pdf,.docx,.doc"
+                                required />
+                        </div>
+
+                        <div id="info"></div>
+
+                        <button type="submit" id="apply-job" class="formbold-btn">Postuler maintenant</button>
+
+                        
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    
+    <section class="pagination-container">
+        <div class="pagination" data-total-pages="{{ total_pages }}" data-current-page="{{ page }}">
+            <!-- Left arrow button -->
+            <button class="pagination__arrow">
+                <span class="pagination__arrow-half"></span>
+                <span class="pagination__arrow-half"></span>
+            </button>
+
+            <!-- Page number buttons will be dynamically generated here -->
+
+            <!-- Right arrow button -->
+            <button class="pagination__arrow pagination__arrow--right">
+                <span class="pagination__arrow-half"></span>
+                <span class="pagination__arrow-half"></span>
+            </button>
+
+            <div class="pagination__number-indicator"></div>
+        </div>
+    </section>
+    {% endif %}
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
