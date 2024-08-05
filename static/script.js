@@ -309,7 +309,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function translateText(text, targetLanguage, callback) {
-    var subscriptionKey = "efd803de0a2b45bdb34b2247b8c08ad5";
+    var subscriptionKey = "API_KEY";
     var endpoint =
       "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0";
     var params = "&to=" + targetLanguage;
